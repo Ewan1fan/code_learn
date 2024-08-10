@@ -1,0 +1,57 @@
+#include"pch.h"
+#include<vector>
+#include<array>
+
+
+std::ostream& operator<<(std::ostream& stream, std::vector<int>nums)
+{
+	for (auto it = nums.begin(); it != nums.end(); it++)
+	{
+		stream << *it << " ";
+	}
+	stream << std::endl;
+	return stream;
+}
+
+class Solution {
+public:
+	int removeElement1(std::vector<int>& nums, int val) //快慢双指针
+	{
+		int slowIndex = 0;
+		for (int fastIndex = 0; fastIndex < nums.size(); fastIndex++)
+		{
+			if (nums[fastIndex] == val)
+			{
+				nums[slowIndex++] = nums[fastIndex];//先赋值再加加
+			}
+		}
+		return slowIndex;//slowIndex会比最后一个停下来的位置多加加一次，正好是最后以为的Index+1，也就是size
+	}
+	int removeElement2(std::vector<int>& nums, int val) //相向双指针
+	{
+		int leftIndex = 0;
+		int rightIndex = nums.size() - 1;
+		while (leftIndex <= rightIndex)
+		{
+			while (nums[leftIndex] != val && leftIndex < rightIndex)
+				++leftIndex;
+			while (nums[rightIndex] == val && leftIndex < rightIndex)//数组是非升序的，左边找相等右边找不相等然后移过来。
+				--rightIndex;
+			if (leftIndex < rightIndex)
+			{
+				nums[leftIndex++] = nums[rightIndex--];//改变了相对位置但是移动的少了。每循环一次都会执行一次覆盖
+			}
+		}
+	}
+};
+
+int main()
+{
+	int a[3] = {0,1,2};
+	int index = 0;
+	std::cout << a[index++] << std::endl;
+	for (int i = 0; i < 10; i++)
+	{
+		std::cout << i << std::endl;
+	}
+}

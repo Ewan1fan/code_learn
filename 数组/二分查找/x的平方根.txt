@@ -1,0 +1,43 @@
+#include"pch.h"
+#include<vector>
+#include<array>
+
+
+std::ostream& operator<<(std::ostream& stream, std::vector<int>nums)
+{
+	for (auto it = nums.begin(); it != nums.end(); it++)
+	{
+		stream << *it<<" ";
+	}
+	stream << std::endl;
+	return stream;
+}
+
+class Solution {
+public:
+    int mySqrt(int x) {
+        int left = 0;
+        int right = x;
+        while (left <= right)
+        {
+            int middle = (left + right) / 2;
+            long long multi = (long long)middle * middle;
+            if (multi < x)
+                left = middle + 1;
+            else if (multi > x)
+                right = middle - 1;
+            else
+                return middle;
+        }
+        return right;//搜索的结果只能是right = left - 1;
+    }
+};
+
+
+int main()
+{
+    int x = 2147395599;
+	Solution s;
+	int size = s.mySqrt(x);
+	std::cout << "Sqrt is" << size << std::endl;
+}

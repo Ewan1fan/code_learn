@@ -1,0 +1,80 @@
+#include"pch.h"
+#include<vector>
+#include<array>
+
+
+std::ostream& operator<<(std::ostream& stream, std::vector<int>nums)
+{
+	for (auto it = nums.begin(); it != nums.end(); it++)
+	{
+		stream << *it<<" ";
+	}
+	stream << std::endl;
+	return stream;
+}
+
+class Solution {
+public:
+    std::vector<int> searchRange(std::vector<int>& nums, int target) {
+		int left_border;
+		int right_border;
+		left_border=find_left(nums, target);
+		right_border = find_right(nums, target);
+		if ( left_border == -2 || right_border == -2 )
+			return { -1, -1 };
+		if ( right_border - left_border > 1)
+			return { left_border + 1, right_border - 1 };
+		return { -1 , -1 };
+
+    }
+	int find_left(std::vector<int>& nums , int target)
+	{
+		int left = 0;
+		int right = nums.size() - 1;
+		int left_border = -2;
+		while (left <= right)
+		{
+			int middle = (left + right) / 2;
+			if (nums[middle] >= target)//如果在等于的时候不减会造成边界处不清的状况，这里使用插值的想法，即使等于左边界也要向左移动
+			{
+				right = middle - 1;
+				left_border = right;
+			}
+			else
+			{
+				left = middle + 1;
+			}
+		}
+		return left_border;
+	}
+	int find_right(std::vector<int>& nums, int target)
+	{ 
+		int left = 0;
+		int right = nums.size() - 1;
+		int right_border = -2;//防止没有被赋值
+		while (left <= right)
+		{
+			int middle = (left + right) / 2;
+			if (nums[middle] > target)
+			{
+				right = middle - 1;
+				right_border = left;
+			}
+			else//等于情况划到left中保证走出target的区间
+			{
+				left = middle + 1;
+			}
+		}
+		return right_border;
+	}
+};
+
+
+int main()
+{
+    std::vector<int>a = {1,1,2};
+	int val = 1;
+	Solution s;
+	std::vector<int> size = s.searchRange(a, val);
+	std::cout << "size is" << size << std::endl;
+}

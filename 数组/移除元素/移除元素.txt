@@ -1,0 +1,52 @@
+#include"pch.h"
+#include<vector>
+#include<array>
+#include<iostream>
+
+
+std::ostream& operator<<(std::ostream& stream, std::vector<int>nums)
+{
+	for (auto it = nums.begin(); it != nums.end(); it++)
+	{
+		stream << *it<<" ";
+	}
+	stream << std::endl;
+	return stream;
+}
+
+class Solution
+{
+public:
+	int removeElement(std::vector<int>& nums, int val) 
+	{
+		int size = nums.size();
+		auto end = nums.end();
+		for (auto it = nums.begin(); it != end;)//这种元素范围被称为左闭合区间（left-inclusive interval），其标准数学描述为[begin, end)
+		{
+			std::cout << nums << std::endl;
+			if (val == *it)
+			{
+				for (auto it1 = it; it1 != end-1; it1++) 
+				{
+					*it1 = *(it1 + 1);
+
+				}
+				end--;
+				size--;
+				continue;
+			}
+			it++;
+		}
+		return size;
+	}
+};
+
+
+int main()
+{
+	std::vector<int>a = { 2,3,3,3,3,3,2,3,3,3,3,3,3,23 };
+	int val = 3;
+	Solution s;
+	int size = s.removeElement(a, val);
+	std::cout << "size is" << size << std::endl;
+}

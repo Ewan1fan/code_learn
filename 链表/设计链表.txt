@@ -1,0 +1,105 @@
+class MyLinkedList {
+
+public:
+    struct LinkedNode
+    {
+    public:
+        int val;
+        LinkedNode* next;
+        LinkedNode(int val):val(val),next(nullptr){}
+    };
+    MyLinkedList() 
+    {
+        _dummyHead = new LinkedNode(0);
+    }
+    
+    int get(int index) {
+        LinkedNode* address = _dummyHead->next;
+        bool isexist = 1;
+        for(int i = 0; i< index;i++)
+        {
+            if(address -> next)
+                address = address -> next;
+            else
+                isexist = 0;
+                break;
+        }
+        if(address->next)
+            return address->next->val;
+        else
+            return -1;
+    }
+    
+    void addAtHead(int val) {
+        LinkedNode* n_Head = new LinkedNode(val);
+        n_Head -> next = _dummyHead -> next;
+        _dummyHead -> next = n_Head;
+    }
+    
+    void addAtTail(int val) {
+        LinkedNode TaliNode(val);
+        LinkedNode* address = _dummyHead;
+
+        while (address->next)
+        {
+            address = address -> next;
+        }
+        address -> next = &TaliNode;
+
+    }
+    
+    void addAtIndex(int index, int val) {
+        LinkedNode* address = _dummyHead;
+        LinkedNode Index_Node(val);
+        bool isexist = 1;
+        for(int i = 0; i< index;i++)
+        {
+            if(address -> next)
+                address = address -> next;
+            else
+            {
+                isexist = 0;
+                break;
+            }
+        }
+        if(isexist)
+        {
+            Index_Node.next = address -> next;
+            address -> next = & Index_Node;
+        } 
+    }
+    
+    void deleteAtIndex(int index) {
+        LinkedNode* address = _dummyHead;
+        bool isexist = 1;
+        for(int i = 0; i< index;i++)
+        {
+            if(address -> next)
+                address = address -> next;
+            else
+            {
+                isexist = 0;
+                break;
+            }
+        }
+        if(address->next)
+            {
+                LinkedNode* temp = address -> next;
+                address -> next = address -> next -> next;
+                delete temp;
+                temp=nullptr;
+            }
+    }
+private:
+    LinkedNode* _dummyHead;
+};
+
+/**
+ * Your MyLinkedList object will be instantiated and called as such:
+ * MyLinkedList* obj = new MyLinkedList();
+ * int param_1 = obj->get(index);
+ * obj->addAtHead(val);
+ * obj->addAtTail(val);
+ * obj->addAtIndex(index,val);
+ * obj->deleteAtIndex(index);
+ */

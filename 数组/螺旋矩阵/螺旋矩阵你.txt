@@ -1,0 +1,50 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<int> result(m * n, 0);
+        int position_xy[2] = { 0, 0 };
+        int counter = 0;
+        int i, j;
+        int offset = 1;
+        while (1)
+        {
+            i = position_xy[0]; j = position_xy[1];
+            for (; j < n - offset; j++)
+            {
+                result[counter++] = matrix[i][j];
+                if (counter > m * n - 1) return result;
+            }
+            for (; i < m - offset; i++)
+            {
+                result[counter++] = matrix[i][j];
+                if (counter > m * n - 1) return result;
+            }
+
+            if (position_xy[0] == m - offset || position_xy[1] == n - offset)//如果最后剩下一行或一列，那一行或者那一列会少循环最后一个
+            {
+                result[counter++] = matrix[i][j];
+                if (counter > m * n - 1) return result;
+            }
+            else
+            {
+                for (; j > position_xy[1]; j--)
+                {
+                    result[counter++] = matrix[i][j];
+                    if (counter > m * n - 1) return result;
+                }
+                for (; i > position_xy[0]; i--)
+                {
+                    result[counter++] = matrix[i][j];
+                    if (counter > m * n - 1) return result;
+                }
+            }
+            position_xy[0]++;
+            position_xy[1]++;
+            offset++;
+        }
+        return result;
+
+    }
+};

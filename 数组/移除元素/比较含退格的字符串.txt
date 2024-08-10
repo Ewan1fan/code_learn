@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+        string s_real = get_real_string(s);
+        string t_real = get_real_string(t);
+        if (s_real.size()==t_real.size())
+        {
+            int boolInt = 0;
+            for (int i = 0; i<s_real.size();i++)
+                {
+                    if(s_real[i]!=t_real[i])
+                    {
+                        boolInt++;
+                    }
+                }
+            return !boolInt;
+        }
+        return 0;
+    }
+    string get_real_string(string& str)
+    {
+        int slow_s = 0;
+        for (int fast_s = 0; fast_s < str.size(); fast_s++)
+        {
+            if(str[fast_s] =='#')
+            { 
+                if(slow_s != 0)
+                    slow_s--;
+            }
+            else
+                str[slow_s++] = str[fast_s];
+        }
+        str.resize(slow_s);
+        return str;
+    }
+};

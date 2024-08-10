@@ -1,0 +1,37 @@
+设置虚拟头节点统一逻辑
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        ListNode* virtual_head = new ListNode(0);
+        virtual_head -> next = head ; 
+        ListNode* now_address = virtual_head;
+        while(now_address->next != nullptr)
+        {
+            if (now_address->next->val == val)
+            {
+                ListNode* Temp = now_address->next;
+                now_address->next = now_address->next->next;
+                delete Temp;
+            }
+            else
+            {
+                now_address = now_address->next;
+            }
+            
+        }
+        head = virtual_head -> next;
+        delete virtual_head;
+        return head;
+        
+    }
+};

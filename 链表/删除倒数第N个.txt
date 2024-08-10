@@ -1,0 +1,34 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* _dummyhead = new ListNode(0);
+        _dummyhead -> next = head;
+        ListNode* Slow = _dummyhead;
+        ListNode* Fast = _dummyhead;
+        for (int i = 0; i < n; i++ )
+        {
+            Fast = Fast -> next;
+        }
+        while(Fast->next)
+        {
+            Fast = Fast -> next;
+            Slow = Slow -> next;
+        }
+
+        ListNode* tmp = Slow -> next;
+        Slow -> next = Slow -> next -> next;
+        delete tmp;
+        tmp = nullptr;
+        return _dummyhead -> next;//出现heap use after release是因为之前返回的head有可能被删除了
+    }
+};
