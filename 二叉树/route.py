@@ -1,5 +1,6 @@
 from typing import List
 import queue
+import collections
 class treenode():
     def __init__(self,val,left = None,right = None):
         self.val = val
@@ -83,13 +84,13 @@ class Solution:
         if root:
             stack.append(root)
         while stack:
-            cur = stack[-1]
-            if cur:
+            current = stack[-1]
+            if current:
                 stack.pop()#弹出，然后按照中左右或者其他遍历的顺序再倒着加进去
-                stack.append(cur)
+                stack.append(current)
                 stack.append(None)#中
-                if cur.right: stack.append(cur.right)#右
-                if cur.left: stack.append(cur.left)#左
+                if current.right: stack.append(current.right)#右
+                if current.left: stack.append(current.left)#左
 
                 
             else:
@@ -98,24 +99,41 @@ class Solution:
             # print_val(stack)
         return res
     def LevelOrderTraversal(self,root:treenode)-> List[int]:
+        resolution = []
+        if not root:
+            return resolution
+        que = queue.Queue()
+        que.put(root)
+        length = 1
+        while(length):
+            cur = que.get()            
+            resolution.append(cur.val)
+            length -= 1
+            if cur.left: 
+                que.put(cur.left)
+                length+=1
+            if cur.right: 
+                que.put(cur.right)
+                length+=1
+        return resolution
+    def LevelOrderTraversal2(self,root:treenode)-> List[int]:
         res = []
         if not root:
             return res
-        stack = queue.Queue()
-        stack.put(root)
+        que = collections.deque()
+        que.appendleft(root)
         length = 1
         while(length):
-            cur = stack.get()            
+            cur = que.pop()            
             res.append(cur.val)
             length -= 1
             if cur.left: 
-                stack.put(cur.left)
+                que.appendleft(cur.left)
                 length+=1
             if cur.right: 
-                stack.put(cur.right)
+                que.appendleft(cur.right)
                 length+=1
         return res
-
 t1 = treenode(5)
 t2 = treenode(3)
 t3 = treenode(2)
@@ -139,5 +157,5 @@ t3.right = t7
 
 list = []
 sol = Solution()
-l = sol.LevelOrderTraversal(t1)
+l = sol.LevelOrderTraversal2(t1)
 print(l)
