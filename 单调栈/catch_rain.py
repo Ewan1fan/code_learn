@@ -32,7 +32,7 @@ class Solution:
         return max_area
 
 # temperatures2 = [0,1,0,2,1,0,1,3,2,1,2,1]
-# temperatures2 = [4,2]
+temperatures2 = [4,2]
 # temperatures2 = [2,1,2,1,1,0]
 
 s = Solution()
