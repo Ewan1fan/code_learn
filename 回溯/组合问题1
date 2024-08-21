@@ -1,0 +1,42 @@
+from typing import List
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        self.subpath = []
+        self.path = []
+
+        def backtracing(n,startindex,k):
+            if len(self.subpath) == k:
+                self.path.append(self.subpath[:])
+                return
+            for i in range(startindex,n+1):
+                self.subpath.append(i)
+                backtracing(n,i+1,k)
+                self.subpath.pop()
+        backtracing(n,1,k)
+        return self.path
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        self.subpath = []
+        self.path = []
+
+        def backtracing(n,startindex,k):
+            if len(self.subpath) == k:
+
+                self.path.append(self.subpath.copy())#深浅复制
+                return
+            for i in range(startindex,n - (k - len(self.path)) + 2):
+                self.subpath.append(i)
+                backtracing(n,i+1,k)#k是一个恒定的量，尤其还涉及到判断，甚至在回溯中可能叠加减小为零，这个剪枝只能用它来推导，不能直接动它
+                self.subpath.pop()
+        backtracing(n,1,k)
+        return self.path
+    
+s = Solution()
+print(s.combine(4,2))
+a=[]
+b=[1,2]
+a.append(b)
+print(a)
+b.pop()
+print(a)
+b=[1,2]
+print(a)
