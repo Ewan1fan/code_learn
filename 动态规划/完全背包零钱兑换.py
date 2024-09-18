@@ -25,4 +25,5 @@ class Solution:
         return dp[amount]
     
 s = Solution()
-print(s.change1(amount = 5, coins = [1, 2, 5]))
+print(s.change(amount = 4, coins = [1, 2, 3]))
+print(s.change1(amount = 4, coins = [1, 2, 3]))
