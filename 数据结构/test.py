@@ -51,3 +51,5 @@ print(max('00','0',key = lambda x:len(x)))
 print(len([]))
 dp = [[[]]*(2) for _ in range(2)]
 print(len(dp[1][1]))
+print('abc'.endswith('c'))
+print([0,0]*3)
